@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biên bản Giao nhận TSCĐ - Mẫu 01-TSCĐ</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* UI Base Style */
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #f3f4f6;
+        }
+
+        /* Document Preview Styles - Strict Times New Roman Standard */
+        .doc-preview {
+            font-family: 'Times New Roman', Times, serif;
+            color: #000;
+            background-color: #ffffff;
+            line-height: 1.4;
+            font-size: 13pt;
+        }
+        
+        /* Table styling for official document look */
+        .doc-table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            table-layout: fixed; /* Cố định chiều rộng bảng tránh tràn mép */
+        }
+        .doc-table th, .doc-table td {
+            border: 1px solid #000;
+            padding: 4px 2px;
+            font-size: 10.5pt;
+            vertical-align: middle;
+            font-family: 'Times New Roman', Times, serif;
+            word-wrap: break-word;
+        }
+        .doc-table th {
+            font-weight: bold;
+            text-align: center;
+            background-color: #fcfcfc;
+        }
+        
+        /* Custom scrollbar for form panel */
+        .custom-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* PRINT CONFIGURATION - CHUẨN IN ẤN TÀI LIỆU */
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 20mm 15mm 20mm 20mm; /* Top Right Bottom Left standard */
+                @bottom-center {
+                    content: counter(page);
+                    font-family: 'Times New Roman', Times, serif;
+                    font-size: 11pt;
+                }
+            }
+
+            body {
+                counter-reset: page;
+                background: #fff !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                overflow: visible !important;
+                height: auto !important;
+            }
+
+            .no-print, header {
+                display: none !important;
+            }
+
+            .main-container {
+                display: block !important;
+                overflow: visible !important;
+                height: auto !important;
+                position: static !important;
+            }
+
+            .print-only-container {
+                display: block !important;
+                width: 100% !important;
+                max-width: none !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                box-shadow: none !important;
+                overflow: visible !important;
+                background: transparent !important;
+            }
+
+            .doc-preview {
+                padding: 0 !important;
+                font-size: 13pt !important;
+                box-shadow: none !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                min-height: auto !important;
+                border: none !important;
+                border-radius: 0 !important;
+            }
+
+            .page-number-footer {
+                display: block;
+                text-align: center;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                font-size: 11pt;
+                font-family: 'Times New Roman', Times, serif;
+            }
+
+            table tr {
+                page-break-inside: avoid;
+            }
+            .avoid-break {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body class="h-screen flex flex-col overflow-hidden">
+
+    <!-- Top Navigation Bar (Hidden when printed) -->
+    <header class="bg-slate-800 text-white px-6 py-3 flex justify-between items-center shadow-md no-print z-10 flex-shrink-0">
+        <div class="flex items-center space-x-3">
+            <i class="fa-solid fa-file-invoice text-emerald-400 text-2xl"></i>
+            <div>
+                <h1 class="font-bold text-lg leading-tight">Biên bản Giao nhận Tài sản cố định</h1>
+                <p class="text-xs text-slate-400">Theo Thông tư số 99/2025/TT-BTC (Mẫu số 01-TSCĐ)</p>
+            </div>
+        </div>
+        <div class="flex items-center space-x-3">
+            <button onclick="resetForm()" class="px-3 py-1.5 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded text-sm transition flex items-center gap-1.5">
+                <i class="fa-solid fa-rotate-right text-xs"></i> Làm mới
+            </button>
+            <button onclick="window.print()" class="px-4 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white font-medium rounded text-sm transition shadow-sm flex items-center gap-2">
+                <i class="fa-solid fa-print"></i> In Biên Bản
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content Area: Split Screen -->
+    <div class="main-container flex flex-1 overflow-hidden relative">
+
+        <!-- LEFT PANEL: INPUT FORM (Hidden when printed) -->
+        <div class="w-full lg:w-5/12 bg-white border-r border-slate-200 overflow-y-auto custom-scroll p-5 space-y-6 no-print flex-shrink-0">
+            
+            <div class="border-b pb-3 border-slate-200">
+                <h2 class="text-base font-bold text-slate-800 flex items-center gap-2">
+                    <i class="fa-solid fa-pen-to-square text-indigo-600"></i>
+                    THÔNG TIN CHUNG
+                </h2>
+            </div>
+
+            <!-- Header Info Inputs -->
+            <div class="grid grid-cols-2 gap-4">
+                <div class="col-span-2">
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Tên Đơn vị</label>
+                    <input type="text" id="inputDonVi" value="CÔNG TY TNHH PHÁT TRIỂN CÔNG NGHỆ" class="w-full px-3 py-1.5 border border-slate-300 rounded text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none" oninput="updatePreview()">
+                </div>
+                <div class="col-span-2">
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Bộ phận</label>
+                    <input type="text" id="inputBoPhan" value="Phòng Kế toán - Tài chính" class="w-full px-3 py-1.5 border border-slate-300 rounded text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none" oninput="updatePreview()">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Số chứng từ</label>
+                    <input type="text" id="inputSo" value="01/BB-GNTSCĐ" class="w-full px-3 py-1.5 border border-slate-300 rounded text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none" oninput="updatePreview()">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Nợ / Có</label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <input type="text" id="inputNo" placeholder="Nợ" value="2111" class="w-full px-2 py-1.5 border border-slate-300 rounded text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none" oninput="updatePreview()">
+                        <input type="text" id="inputCo" placeholder="Có" value="1121" class="w-full px-2 py-1.5 border border-slate-300 rounded text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none" oninput="updatePreview()">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Ngày lập biên bản</label>
+                    <input type="date" id="inputNgay" class="w-full px-3 py-1.5 border border-slate-300 rounded text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none" onchange="updatePreview()">
+                </div>
+            </div>
+
+            <!-- Decision Information -->
+            <div class="border-t pt-4 border-slate-200">
+                <h3 class="text-sm font-bold text-slate-700 mb-3">Căn cứ Quyết định</h3>
+                <div class="space-y-3">
+                    <div class="grid grid-cols-3 gap-2">
+                        <div class="col-span-1">
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Số QĐ</label>
+                            <input type="text" id="inputQdSo" value="158/QĐ-TGĐ" class="w-full px-3 py-1.5 border border-slate-300 rounded text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none" oninput="updatePreview()">
+                        </div>
+                        <div class="col-span-2">
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Ngày QĐ</label>
+                            <input type="date" id="inputQdNgay" class="w-full px-3 py-1.5 border border-slate-300 rounded text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none" onchange="updatePreview()">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Của (Cơ quan/Cấp có thẩm quyền)</label>
+                        <input type="text" id="inputQdCua" value="Tổng Giám Đốc Công ty" class="w-full px-3 py-1.5 border border-slate-300 rounded text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none" oninput="updatePreview()">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Về việc</label>
+                        <input type="text" id="inputQdVeViec" value="Bàn giao tài sản cố định mua mới năm 2026" class="w-full px-3 py-1.5 border border-slate-300 rounded text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none" oninput="updatePreview()">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Địa điểm giao nhận TSCĐ</label>
+                        <input type="text" id="inputDiaDiem" value="Văn phòng Công ty - Tầng 5, Tòa nhà Innovation" class="w-full px-3 py-1.5 border border-slate-300 rounded text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none" oninput="updatePreview()">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Committee Members Section -->
+            <div class="border-t pt-4 border-slate-200">
+                <div class="flex justify-between items-center mb-3">
+                    <h3 class="text-sm font-bold text-slate-700">Ban giao nhận TSCĐ</h3>
+                    <button onclick="addCommitteeMember()" class="px-2 py-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 rounded text-xs font-medium transition flex items-center gap-1">
+                        <i class="fa-solid fa-plus text-xs"></i> Thêm người
+                    </button>
+                </div>
+                <div id="committeeContainer" class="space-y-3">
+                    <!-- Dynamic Committee Items -->
+                </div>
+            </div>
+
+            <!-- Section 1: Fixed Assets Table Input -->
+            <div class="border-t pt-4 border-slate-200">
+                <div class="flex justify-between items-center mb-3">
+                    <h3 class="text-sm font-bold text-slate-700">Danh sách Tài sản cố định</h3>
+                    <button onclick="addAssetRow()" class="px-2 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-600 rounded text-xs font-medium transition flex items-center gap-1">
+                        <i class="fa-solid fa-plus text-xs"></i> Thêm TSCĐ
+                    </button>
+                </div>
+                <div id="assetsInputContainer" class="space-y-4">
+                    <!-- Dynamic Asset Inputs -->
+                </div>
+            </div>
+
+            <!-- Section 2: Accessories Input -->
+            <div class="border-t pt-4 border-slate-200">
+                <div class="flex justify-between items-center mb-3">
+                    <h3 class="text-sm font-bold text-slate-700">Dụng cụ, Phụ tùng kèm theo</h3>
+                    <button onclick="addAccessoryRow()" class="px-2 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-600 rounded text-xs font-medium transition flex items-center gap-1">
+                        <i class="fa-solid fa-plus text-xs"></i> Thêm phụ tùng
+                    </button>
+                </div>
+                <div id="accessoriesInputContainer" class="space-y-3">
+                    <!-- Dynamic Accessory Inputs -->
+                </div>
+            </div>
+
+            <!-- Signatories Input -->
+            <div class="border-t pt-4 border-slate-200">
+                <h3 class="text-sm font-bold text-slate-700 mb-3">Thông tin Người ký</h3>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Giám đốc bên nhận</label>
+                        <input type="text" id="inputSignGiamDoc" value="Nguyễn Văn A" class="w-full px-3 py-1.5 border border-slate-300 rounded text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none" oninput="updatePreview()">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Kế toán trưởng bên nhận</label>
+                        <input type="text" id="inputSignKeToan" value="Trần Thị B" class="w-full px-3 py-1.5 border border-slate-300 rounded text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none" oninput="updatePreview()">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Người nhận</label>
+                        <input type="text" id="inputSignNguoiNhan" value="Lê Văn C" class="w-full px-3 py-1.5 border border-slate-300 rounded text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none" oninput="updatePreview()">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Người giao</label>
+                        <input type="text" id="inputSignNguoiGiao" value="Phạm Văn D" class="w-full px-3 py-1.5 border border-slate-300 rounded text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none" oninput="updatePreview()">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- RIGHT PANEL: LIVE PREVIEW & PRINT TARGET -->
+        <div class="flex-1 bg-slate-200 p-4 lg:p-8 overflow-y-auto custom-scroll flex justify-center items-start print-only-container">
+            
+            <!-- Standard A4 Document Paper Container -->
+            <div class="doc-preview bg-white shadow-xl rounded-sm p-8 sm:p-12 w-full max-w-[850px] min-h-[1100px] flex flex-col justify-between">
+                
+                <div>
+                    <!-- Header Section -->
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="text-left w-1/2">
+                            <div id="viewDonVi" class="font-bold uppercase">Đơn vị: ....................</div>
+                            <div id="viewBoPhan" class="font-normal">Bộ phận: ....................</div>
+                        </div>
+                        <div class="text-center w-1/2 text-xs">
+                            <div class="font-bold text-sm">Mẫu số 01- TSCĐ</div>
+                            <div class="italic">(Kèm theo Thông tư số 99/2025/TT-BTC</div>
+                            <div class="italic">ngày 27 tháng 10 năm 2025 của Bộ trưởng Bộ Tài chính)</div>
+                        </div>
+                    </div>
+
+                    <!-- Title Section -->
+                    <div class="text-center my-6">
+                        <h2 class="font-bold text-xl uppercase tracking-wide">BIÊN BẢN GIAO NHẬN TSCĐ</h2>
+                        <div id="viewNgayThang" class="italic text-sm mt-1">Ngày ..... tháng ..... năm .......</div>
+                    </div>
+
+                    <!-- Voucher Reference Numbers (Đã dịch chuyển xích lên trên bằng -mt-6) -->
+                    <div class="flex justify-end text-sm -mt-6 mb-2 pr-2">
+                        <div class="space-y-0.5">
+                            <div>Số: <span id="viewSo" class="font-semibold">......................</span></div>
+                            <div>Nợ: <span id="viewNo" class="font-semibold">......................</span></div>
+                            <div>Có: <span id="viewCo" class="font-semibold">......................</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Context & Committee -->
+                    <div class="text-sm space-y-1.5 mb-4 text-justify">
+                        <p>
+                            Căn cứ Quyết định số <span id="viewQdSo" class="font-semibold">..........</span> 
+                            ngày <span id="viewQdNgay">.....</span> tháng <span id="viewQdThang">.....</span> năm <span id="viewQdNam">.....</span> 
+                            của <span id="viewQdCua">....................</span> 
+                            về việc <span id="viewQdVeViec">..................................................</span>
+                        </p>
+                        <p class="font-bold mt-2">Ban giao nhận TSCĐ gồm:</p>
+                        <div id="viewCommitteeList" class="space-y-1 pl-2">
+                            <!-- Dynamic Committee List Preview -->
+                        </div>
+                        <p class="mt-2">
+                            Địa điểm giao nhận TSCĐ: <span id="viewDiaDiem">........................................................................</span>
+                        </p>
+                        <p>Xác nhận việc giao nhận TSCĐ như sau:</p>
+                    </div>
+
+                    <!-- Table 1: Assets List -->
+                    <div class="mb-2">
+                        <table class="doc-table">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2" style="width: 4%;">STT</th>
+                                    <th rowspan="2" style="width: 20%;">Tên, ký hiệu quy cách (cấp hạng TSCĐ)</th>
+                                    <th rowspan="2" style="width: 10%;">Số hiệu/Mã TSCĐ</th>
+                                    <th rowspan="2" style="width: 8%;">Nước sản xuất (XD)</th>
+                                    <th rowspan="2" style="width: 5%;">Năm SX</th>
+                                    <th rowspan="2" style="width: 5%;">Năm SD</th>
+                                    <th rowspan="2" style="width: 8%;">Công suất (diện tích)</th>
+                                    <th colspan="4" style="width: 32%;">Tính nguyên giá tài sản cố định</th>
+                                    <th rowspan="2" style="width: 8%;">Tài liệu kỹ thuật</th>
+                                </tr>
+                                <tr>
+                                    <th style="width: 8%;">Giá mua</th>
+                                    <th style="width: 8%;">CP vận chuyển</th>
+                                    <th style="width: 8%;">CP chạy thử</th>
+                                    <th style="width: 8%;">Nguyên giá TSCĐ</th>
+                                </tr>
+                                <tr>
+                                    <th class="italic font-normal">A</th>
+                                    <th class="italic font-normal">B</th>
+                                    <th class="italic font-normal">C</th>
+                                    <th class="italic font-normal">D</th>
+                                    <th class="italic font-normal">1</th>
+                                    <th class="italic font-normal">2</th>
+                                    <th class="italic font-normal">3</th>
+                                    <th class="italic font-normal">4</th>
+                                    <th class="italic font-normal">5</th>
+                                    <th class="italic font-normal">6</th>
+                                    <th class="italic font-normal">7</th>
+                                    <th class="italic font-normal">E</th>
+                                </tr>
+                            </thead>
+                            <tbody id="viewAssetsBody">
+                                <!-- Dynamic Assets Row Preview -->
+                            </tbody>
+                            <tfoot>
+                                <tr class="font-bold">
+                                    <td colspan="2" class="text-center">Cộng</td>
+                                    <td class="text-center">x</td>
+                                    <td class="text-center">x</td>
+                                    <td class="text-center">x</td>
+                                    <td class="text-center">x</td>
+                                    <td class="text-center">x</td>
+                                    <td id="totalGiaMua" class="text-right">0</td>
+                                    <td id="totalChiPhiVanChuyen" class="text-right">0</td>
+                                    <td id="totalChiPhiChayThu" class="text-right">0</td>
+                                    <td id="totalNguyenGia" class="text-right">0</td>
+                                    <td class="text-center">x</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                    <!-- Total Amount in Vietnamese Words -->
+                    <div class="text-sm italic my-3 font-semibold">
+                        - Số tiền Nguyên giá TSCĐ bằng chữ: <span id="viewMoneyInWords" class="font-normal italic">Không đồng</span>
+                    </div>
+
+                    <!-- Table 2: Accessories -->
+                    <div class="mt-4 mb-6 avoid-break">
+                        <div class="text-center font-bold text-sm mb-2">DỤNG CỤ, PHỤ TÙNG KÈM THEO</div>
+                        <table class="doc-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 6%;">STT</th>
+                                    <th style="width: 44%;">Tên, qui cách dụng cụ, phụ tùng</th>
+                                    <th style="width: 15%;">Đơn vị tính</th>
+                                    <th style="width: 15%;">Số lượng</th>
+                                    <th style="width: 20%;">Giá trị</th>
+                                </tr>
+                                <tr>
+                                    <th class="italic font-normal">A</th>
+                                    <th class="italic font-normal">B</th>
+                                    <th class="italic font-normal">C</th>
+                                    <th class="italic font-normal">1</th>
+                                    <th class="italic font-normal">2</th>
+                                </tr>
+                            </thead>
+                            <tbody id="viewAccessoriesBody">
+                                <!-- Dynamic Accessories Row Preview -->
+                            </tbody>
+                            <tfoot>
+                                <tr class="font-bold">
+                                    <td colspan="4" class="text-center">Cộng</td>
+                                    <td id="totalGiaTriPhuTung" class="text-right">0</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                    <!-- Signatures Section -->
+                    <div class="grid grid-cols-4 gap-2 text-center text-xs mt-6 pt-2 avoid-break">
+                        <div>
+                            <div class="font-bold uppercase text-sm">Giám đốc bên nhận</div>
+                            <div class="italic text-xs">(Ký, họ tên, đóng dấu)</div>
+                            <div id="viewSignGiamDoc" class="mt-20 font-bold text-sm"></div>
+                        </div>
+                        <div>
+                            <div class="font-bold uppercase text-sm">Kế toán trưởng bên nhận</div>
+                            <div class="italic text-xs">(Ký, họ tên)</div>
+                            <div id="viewSignKeToan" class="mt-20 font-bold text-sm"></div>
+                        </div>
+                        <div>
+                            <div class="font-bold uppercase text-sm">Người nhận</div>
+                            <div class="italic text-xs">(Ký, họ tên)</div>
+                            <div id="viewSignNguoiNhan" class="mt-20 font-bold text-sm"></div>
+                        </div>
+                        <div>
+                            <div class="font-bold uppercase text-sm">Người giao</div>
+                            <div class="italic text-xs">(Ký, họ tên)</div>
+                            <div id="viewSignNguoiGiao" class="mt-20 font-bold text-sm"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer Note -->
+                <div class="mt-8 pt-4 border-t border-slate-300 text-xs italic text-slate-700 avoid-break">
+                    <strong>Ghi chú:</strong> Tùy theo đặc điểm hoạt động sản xuất kinh doanh và yêu cầu quản lý của đơn vị mình, doanh nghiệp được xây dựng, thiết kế biểu mẫu chứng từ kế toán.
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Set Default Dates to Today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('inputNgay').value = today;
+        document.getElementById('inputQdNgay').value = today;
+
+        // Dynamic State Data
+        let committeeMembers = [
+            { name: 'Nguyễn Văn A', position: 'Giám đốc', role: 'Đại diện bên nhận' },
+            { name: 'Trần Văn B', position: 'Trưởng phòng Kỹ thuật', role: 'Đại diện bên giao' },
+            { name: 'Lê Thị C', position: 'Kế toán tài sản', role: 'Đại diện bên nhận' }
+        ];
+
+        let assets = [
+            {
+                stt: '1',
+                name: 'Máy phay CNC 5 trục Model X200',
+                code: 'TSCĐ-2026-001',
+                country: 'Nhật Bản',
+                yearMfg: '2025',
+                yearUse: '2026',
+                capacity: '15 kW',
+                giaMua: 450000000,
+                vanChuyen: 12000000,
+                chayThu: 8000000,
+                docs: 'Sách HDSD, Đĩa CD'
+            }
+        ];
+
+        let accessories = [
+            {
+                stt: '1',
+                name: 'Bộ dao phay hợp kim 12 món',
+                unit: 'Bộ',
+                quantity: 2,
+                value: 15000000
+            },
+            {
+                stt: '2',
+                name: 'Chìa khóa lục giác định tâm',
+                unit: 'Cái',
+                quantity: 5,
+                value: 2500000
+            }
+        ];
+
+        // Format Numbers with Thousand Separator (.)
+        function formatNumber(num) {
+            if (num === null || num === undefined || isNaN(num) || num === '') return '0';
+            return new Intl.NumberFormat('vi-VN').format(num);
+        }
+
+        // Clean Number String from Thousand Separators
+        function parseFormattedNumber(str) {
+            if (!str) return 0;
+            const cleanStr = str.toString().replace(/\./g, '').replace(/,/g, '');
+            const parsed = parseFloat(cleanStr);
+            return isNaN(parsed) ? 0 : parsed;
+        }
+
+        // Format Currency Inputs dynamically on user keypress
+        function handleCurrencyInput(input) {
+            let cursorPosition = input.selectionStart;
+            let originalLength = input.value.length;
+            
+            let rawValue = parseFormattedNumber(input.value);
+            if (rawValue === 0 && input.value.trim() === '') {
+                input.value = '';
+            } else {
+                input.value = formatNumber(rawValue);
+            }
+
+            let newLength = input.value.length;
+            cursorPosition = cursorPosition + (newLength - originalLength);
+            input.setSelectionRange(cursorPosition, cursorPosition);
+
+            updatePreview();
+        }
+
+        // Convert Numbers into Words (Vietnamese)
+        function numberToWordsVN(number) {
+            if (number === 0) return 'Không đồng';
+            
+            const defaultNumbers = ['không', 'một', 'hai', 'ba', 'bốn', 'năm', 'sáu', 'bảy', 'tám', 'chín'];
+            
+            function readTriple(num) {
+                let trăm = Math.floor(num / 100);
+                let chục = Math.floor((num % 100) / 10);
+                let đơnVị = num % 10;
+                let result = '';
+
+                if (trăm > 0 || chục > 0 || đơnVị > 0) {
+                    result += defaultNumbers[trăm] + ' trăm ';
+                }
+
+                if (chục > 1) {
+                    result += defaultNumbers[chục] + ' mươi ';
+                    if (đơnVị === 1) result += 'mốt ';
+                    else if (đơnVị === 5) result += 'lăm ';
+                    else if (đơnVị > 0) result += defaultNumbers[đơnVị] + ' ';
+                } else if (chục === 1) {
+                    result += 'mười ';
+                    if (đơnVị === 1) result += 'một ';
+                    else if (đơnVị === 5) result += 'lăm ';
+                    else if (đơnVị > 0) result += defaultNumbers[đơnVị] + ' ';
+                } else if (chục === 0 && đơnVị > 0) {
+                    if (trăm > 0) result += 'lẻ ';
+                    if (đơnVị === 5 && trăm > 0) result += 'năm ';
+                    else result += defaultNumbers[đơnVị] + ' ';
+                }
+
+                return result;
+            }
+
+            let str = '';
+            let block = Math.floor(number);
+            const units = ['', 'nghìn', 'triệu', 'tỷ', 'nghìn tỷ', 'triệu tỷ'];
+            let unitIndex = 0;
+
+            while (block > 0) {
+                let triple = block % 1000;
+                if (triple > 0) {
+                    let tripleText = readTriple(triple);
+                    str = tripleText + units[unitIndex] + ' ' + str;
+                }
+                block = Math.floor(block / 1000);
+                unitIndex++;
+            }
+
+            str = str.trim();
+            if (!str) return 'Không đồng';
+
+            str = str.charAt(0).toUpperCase() + str.slice(1);
+            return str + ' đồng chẵn.';
+        }
+
+        // Render Committee Form Inputs
+        function renderCommitteeInputs() {
+            const container = document.getElementById('committeeContainer');
+            container.innerHTML = '';
+            
+            committeeMembers.forEach((member, index) => {
+                const item = document.createElement('div');
+                item.className = 'p-3 bg-slate-50 border border-slate-200 rounded-lg relative space-y-2';
+                item.innerHTML = `
+                    <button onclick="removeCommitteeMember(${index})" class="absolute top-2 right-2 text-slate-400 hover:text-red-500 p-1 text-xs">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                    <div class="grid grid-cols-2 gap-2 pr-6">
+                        <div>
+                            <label class="block text-[11px] text-slate-500 font-medium">Họ và tên</label>
+                            <input type="text" value="${member.name}" oninput="committeeMembers[${index}].name = this.value; updatePreview()" 
+                                class="w-full px-2 py-1 border border-slate-300 rounded text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] text-slate-500 font-medium">Chức vụ</label>
+                            <input type="text" value="${member.position}" oninput="committeeMembers[${index}].position = this.value; updatePreview()" 
+                                class="w-full px-2 py-1 border border-slate-300 rounded text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] text-slate-500 font-medium">Đại diện</label>
+                        <input type="text" value="${member.role}" oninput="committeeMembers[${index}].role = this.value; updatePreview()" 
+                            class="w-full px-2 py-1 border border-slate-300 rounded text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none" placeholder="VD: Bên giao / Bên nhận">
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        function addCommitteeMember() {
+            committeeMembers.push({ name: '', position: '', role: '' });
+            renderCommitteeInputs();
+            updatePreview();
+        }
+
+        function removeCommitteeMember(index) {
+            committeeMembers.splice(index, 1);
+            renderCommitteeInputs();
+            updatePreview();
+        }
+
+        // Render Asset Form Inputs
+        function renderAssetsInputs() {
+            const container = document.getElementById('assetsInputContainer');
+            container.innerHTML = '';
+
+            assets.forEach((asset, index) => {
+                const card = document.createElement('div');
+                card.className = 'p-3 bg-slate-50 border border-slate-200 rounded-lg relative space-y-3';
+                card.innerHTML = `
+                    <div class="flex justify-between items-center border-b pb-1.5 border-slate-200">
+                        <span class="font-bold text-xs text-indigo-600">Mục TSCĐ #${index + 1}</span>
+                        ${assets.length > 1 ? `<button onclick="removeAssetRow(${index})" class="text-red-500 hover:text-red-700 text-xs font-medium"><i class="fa-solid fa-trash-can"></i> Xóa</button>` : ''}
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div class="col-span-2">
+                            <label class="block text-[11px] text-slate-500 font-medium">Tên, quy cách (Cột B)</label>
+                            <input type="text" value="${asset.name}" oninput="assets[${index}].name = this.value; updatePreview()" class="w-full px-2 py-1 border border-slate-300 rounded text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] text-slate-500 font-medium">Mã/Số hiệu TSCĐ (Cột C)</label>
+                            <input type="text" value="${asset.code}" oninput="assets[${index}].code = this.value; updatePreview()" class="w-full px-2 py-1 border border-slate-300 rounded text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] text-slate-500 font-medium">Nước sản xuất (Cột D)</label>
+                            <input type="text" value="${asset.country}" oninput="assets[${index}].country = this.value; updatePreview()" class="w-full px-2 py-1 border border-slate-300 rounded text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] text-slate-500 font-medium">Năm SX (Cột 1)</label>
+                            <input type="text" value="${asset.yearMfg}" oninput="assets[${index}].yearMfg = this.value; updatePreview()" class="w-full px-2 py-1 border border-slate-300 rounded text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] text-slate-500 font-medium">Năm dùng (Cột 2)</label>
+                            <input type="text" value="${asset.yearUse}" oninput="assets[${index}].yearUse = this.value; updatePreview()" class="w-full px-2 py-1 border border-slate-300 rounded text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none">
+                        </div>
+                        <div class="col-span-2">
+                            <label class="block text-[11px] text-slate-500 font-medium">Công suất thiết kế (Cột 3)</label>
+                            <input type="text" value="${asset.capacity}" oninput="assets[${index}].capacity = this.value; updatePreview()" class="w-full px-2 py-1 border border-slate-300 rounded text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] text-slate-500 font-medium">Giá mua (Cột 4)</label>
+                            <input type="text" value="${formatNumber(asset.giaMua)}" oninput="assets[${index}].giaMua = parseFormattedNumber(this.value); handleCurrencyInput(this);" class="w-full px-2 py-1 border border-slate-300 rounded text-xs text-right font-medium text-emerald-700 focus:ring-1 focus:ring-indigo-500 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] text-slate-500 font-medium">Chi phí vận chuyển (Cột 5)</label>
+                            <input type="text" value="${formatNumber(asset.vanChuyen)}" oninput="assets[${index}].vanChuyen = parseFormattedNumber(this.value); handleCurrencyInput(this);" class="w-full px-2 py-1 border border-slate-300 rounded text-xs text-right font-medium text-emerald-700 focus:ring-1 focus:ring-indigo-500 focus:outline-none">
+                        </div>
+                        <div class="col-span-2">
+                            <label class="block text-[11px] text-slate-500 font-medium">Chi phí chạy thử (Cột 6)</label>
+                            <input type="text" value="${formatNumber(asset.chayThu)}" oninput="assets[${index}].chayThu = parseFormattedNumber(this.value); handleCurrencyInput(this);" class="w-full px-2 py-1 border border-slate-300 rounded text-xs text-right font-medium text-emerald-700 focus:ring-1 focus:ring-indigo-500 focus:outline-none">
+                        </div>
+                        <div class="col-span-2">
+                            <label class="block text-[11px] text-slate-500 font-medium">Tài liệu kỹ thuật kèm (Cột E)</label>
+                            <input type="text" value="${asset.docs}" oninput="assets[${index}].docs = this.value; updatePreview()" class="w-full px-2 py-1 border border-slate-300 rounded text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none">
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function addAssetRow() {
+            assets.push({
+                stt: (assets.length + 1).toString(),
+                name: '',
+                code: '',
+                country: '',
+                yearMfg: '',
+                yearUse: '',
+                capacity: '',
+                giaMua: 0,
+                vanChuyen: 0,
+                chayThu: 0,
+                docs: ''
+            });
+            renderAssetsInputs();
+            updatePreview();
+        }
+
+        function removeAssetRow(index) {
+            assets.splice(index, 1);
+            renderAssetsInputs();
+            updatePreview();
+        }
+
+        // Render Accessories Form Inputs
+        function renderAccessoriesInputs() {
+            const container = document.getElementById('accessoriesInputContainer');
+            container.innerHTML = '';
+
+            accessories.forEach((acc, index) => {
+                const item = document.createElement('div');
+                item.className = 'p-3 bg-slate-50 border border-slate-200 rounded-lg relative space-y-2';
+                item.innerHTML = `
+                    <div class="flex justify-between items-center border-b pb-1 border-slate-200">
+                        <span class="font-bold text-xs text-slate-600">Phụ tùng #${index + 1}</span>
+                        <button onclick="removeAccessoryRow(${index})" class="text-red-500 hover:text-red-700 text-xs font-medium"><i class="fa-solid fa-xmark"></i> Xóa</button>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div class="col-span-2">
+                            <label class="block text-[11px] text-slate-500 font-medium">Tên phụ tùng (Cột B)</label>
+                            <input type="text" value="${acc.name}" oninput="accessories[${index}].name = this.value; updatePreview()" class="w-full px-2 py-1 border border-slate-300 rounded text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] text-slate-500 font-medium">Đơn vị tính (Cột C)</label>
+                            <input type="text" value="${acc.unit}" oninput="accessories[${index}].unit = this.value; updatePreview()" class="w-full px-2 py-1 border border-slate-300 rounded text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] text-slate-500 font-medium">Số lượng (Cột 1)</label>
+                            <input type="number" value="${acc.quantity}" oninput="accessories[${index}].quantity = parseFloat(this.value) || 0; updatePreview()" class="w-full px-2 py-1 border border-slate-300 rounded text-xs text-right focus:ring-1 focus:ring-indigo-500 focus:outline-none">
+                        </div>
+                        <div class="col-span-2">
+                            <label class="block text-[11px] text-slate-500 font-medium">Giá trị (Cột 2)</label>
+                            <input type="text" value="${formatNumber(acc.value)}" oninput="accessories[${index}].value = parseFormattedNumber(this.value); handleCurrencyInput(this);" class="w-full px-2 py-1 border border-slate-300 rounded text-xs text-right font-medium text-emerald-700 focus:ring-1 focus:ring-indigo-500 focus:outline-none">
+                        </div>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        function addAccessoryRow() {
+            accessories.push({
+                stt: (accessories.length + 1).toString(),
+                name: '',
+                unit: 'Cái',
+                quantity: 1,
+                value: 0
+            });
+            renderAccessoriesInputs();
+            updatePreview();
+        }
+
+        function removeAccessoryRow(index) {
+            accessories.splice(index, 1);
+            renderAccessoriesInputs();
+            updatePreview();
+        }
+
+        // Live Preview Sync Logic
+        function updatePreview() {
+            // General Details
+            document.getElementById('viewDonVi').innerText = 'Đơn vị: ' + (document.getElementById('inputDonVi').value || '....................');
+            document.getElementById('viewBoPhan').innerText = 'Bộ phận: ' + (document.getElementById('inputBoPhan').value || '....................');
+            document.getElementById('viewSo').innerText = document.getElementById('inputSo').value || '....................';
+            document.getElementById('viewNo').innerText = document.getElementById('inputNo').value || '....................';
+            document.getElementById('viewCo').innerText = document.getElementById('inputCo').value || '....................';
+
+            // Date Formatting
+            const dateVal = document.getElementById('inputNgay').value;
+            if (dateVal) {
+                const d = new Date(dateVal);
+                document.getElementById('viewNgayThang').innerText = `Ngày ${d.getDate()} tháng ${d.getMonth() + 1} năm ${d.getFullYear()}`;
+            } else {
+                document.getElementById('viewNgayThang').innerText = 'Ngày ..... tháng ..... năm .......';
+            }
+
+            // Decision Info
+            document.getElementById('viewQdSo').innerText = document.getElementById('inputQdSo').value || '..........';
+            const qdDateVal = document.getElementById('inputQdNgay').value;
+            if (qdDateVal) {
+                const qdDate = new Date(qdDateVal);
+                document.getElementById('viewQdNgay').innerText = qdDate.getDate();
+                document.getElementById('viewQdThang').innerText = qdDate.getMonth() + 1;
+                document.getElementById('viewQdNam').innerText = qdDate.getFullYear();
+            } else {
+                document.getElementById('viewQdNgay').innerText = '.....';
+                document.getElementById('viewQdThang').innerText = '.....';
+                document.getElementById('viewQdNam').innerText = '.....';
+            }
+            document.getElementById('viewQdCua').innerText = document.getElementById('inputQdCua').value || '....................';
+            document.getElementById('viewQdVeViec').innerText = document.getElementById('inputQdVeViec').value || '..................................................';
+            document.getElementById('viewDiaDiem').innerText = document.getElementById('inputDiaDiem').value || '........................................................................';
+
+            // Committee Preview List
+            const viewCommitteeContainer = document.getElementById('viewCommitteeList');
+            viewCommitteeContainer.innerHTML = '';
+            if (committeeMembers.length === 0) {
+                viewCommitteeContainer.innerHTML = '<div class="italic text-slate-400">- Chưa có thành viên ban giao nhận</div>';
+            } else {
+                committeeMembers.forEach(m => {
+                    const line = document.createElement('div');
+                    line.className = 'flex justify-between';
+                    line.innerHTML = `
+                        <span>- Ông/Bà: <strong>${m.name || '........................................'}</strong></span>
+                        <span>Chức vụ: <strong>${m.position || '....................'}</strong></span>
+                        <span>Đại diện: <strong>${m.role || '....................'}</strong></span>
+                    `;
+                    viewCommitteeContainer.appendChild(line);
+                });
+            }
+
+            // Table 1: Assets Live Preview & Calculation
+            const viewAssetsBody = document.getElementById('viewAssetsBody');
+            viewAssetsBody.innerHTML = '';
+
+            let sumGiaMua = 0;
+            let sumVanChuyen = 0;
+            let sumChayThu = 0;
+            let sumNguyenGia = 0;
+
+            assets.forEach((item, idx) => {
+                const nguyenGiaRow = (item.giaMua || 0) + (item.vanChuyen || 0) + (item.chayThu || 0);
+                
+                sumGiaMua += (item.giaMua || 0);
+                sumVanChuyen += (item.vanChuyen || 0);
+                sumChayThu += (item.chayThu || 0);
+                sumNguyenGia += nguyenGiaRow;
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="text-center">${idx + 1}</td>
+                    <td>${item.name || ''}</td>
+                    <td class="text-center">${item.code || ''}</td>
+                    <td class="text-center">${item.country || ''}</td>
+                    <td class="text-center">${item.yearMfg || ''}</td>
+                    <td class="text-center">${item.yearUse || ''}</td>
+                    <td class="text-center">${item.capacity || ''}</td>
+                    <td class="text-right">${formatNumber(item.giaMua)}</td>
+                    <td class="text-right">${formatNumber(item.vanChuyen)}</td>
+                    <td class="text-right">${formatNumber(item.chayThu)}</td>
+                    <td class="text-right font-bold">${formatNumber(nguyenGiaRow)}</td>
+                    <td>${item.docs || ''}</td>
+                `;
+                viewAssetsBody.appendChild(tr);
+            });
+
+            // Update Asset Footers
+            document.getElementById('totalGiaMua').innerText = formatNumber(sumGiaMua);
+            document.getElementById('totalChiPhiVanChuyen').innerText = formatNumber(sumVanChuyen);
+            document.getElementById('totalChiPhiChayThu').innerText = formatNumber(sumChayThu);
+            document.getElementById('totalNguyenGia').innerText = formatNumber(sumNguyenGia);
+
+            // Dynamic Money in Words
+            document.getElementById('viewMoneyInWords').innerText = numberToWordsVN(sumNguyenGia);
+
+            // Table 2: Accessories Preview & Calculation
+            const viewAccessoriesBody = document.getElementById('viewAccessoriesBody');
+            viewAccessoriesBody.innerHTML = '';
+            let sumPhuTungVal = 0;
+
+            accessories.forEach((item, idx) => {
+                sumPhuTungVal += (item.value || 0);
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="text-center">${idx + 1}</td>
+                    <td>${item.name || ''}</td>
+                    <td class="text-center">${item.unit || ''}</td>
+                    <td class="text-center">${item.quantity || 0}</td>
+                    <td class="text-right">${formatNumber(item.value)}</td>
+                `;
+                viewAccessoriesBody.appendChild(tr);
+            });
+
+            document.getElementById('totalGiaTriPhuTung').innerText = formatNumber(sumPhuTungVal);
+
+            // Update Signatures
+            document.getElementById('viewSignGiamDoc').innerText = document.getElementById('inputSignGiamDoc').value || '';
+            document.getElementById('viewSignKeToan').innerText = document.getElementById('inputSignKeToan').value || '';
+            document.getElementById('viewSignNguoiNhan').innerText = document.getElementById('inputSignNguoiNhan').value || '';
+            document.getElementById('viewSignNguoiGiao').innerText = document.getElementById('inputSignNguoiGiao').value || '';
+        }
+
+        // Reset Form Logic
+        function resetForm() {
+            if (confirm('Bạn có chắc chắn muốn làm mới toàn bộ dữ liệu?')) {
+                document.getElementById('inputDonVi').value = 'CÔNG TY TNHH PHÁT TRIỂN CÔNG NGHỆ';
+                document.getElementById('inputBoPhan').value = 'Phòng Kế toán - Tài chính';
+                document.getElementById('inputSo').value = '01/BB-GNTSCĐ';
+                document.getElementById('inputNo').value = '2111';
+                document.getElementById('inputCo').value = '1121';
+                document.getElementById('inputNgay').value = today;
+                document.getElementById('inputQdSo').value = '';
+                document.getElementById('inputQdNgay').value = today;
+                document.getElementById('inputQdCua').value = '';
+                document.getElementById('inputQdVeViec').value = '';
+                document.getElementById('inputDiaDiem').value = '';
+                
+                committeeMembers = [];
+                assets = [];
+                accessories = [];
+
+                renderCommitteeInputs();
+                renderAssetsInputs();
+                renderAccessoriesInputs();
+                updatePreview();
+            }
+        }
+
+        // Initialize App on Page Load
+        window.onload = function() {
+            renderCommitteeInputs();
+            renderAssetsInputs();
+            renderAccessoriesInputs();
+            updatePreview();
+        };
+    </script>
+</body>
+</html>
